@@ -56,6 +56,12 @@ describe LinkedList do
     end
   end
 
+  describe ".reverse" do
+    it "reverses" do
+      expect(LinkedList.reverse(head).to_s).to eql "3 -> 2 -> 1 -> nil"
+    end
+  end
+
   describe LinkedList::Dictionary do
     let(:dictionary) { LinkedList::Dictionary.new }
     before do
