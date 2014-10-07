@@ -96,7 +96,7 @@ class BinarySearchTree
         else
           insert(root.right, value)
         end
-      else
+      else # if equal, insert to the right
         node = BinarySearchTree.new(value, nil, nil)
         old_right = root.right
         root.right = node

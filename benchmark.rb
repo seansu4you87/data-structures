@@ -18,9 +18,9 @@ def benchmark_dictionary(klass, sizes, big_o)
   end
 
   Benchmark.bm 30 do |bm|
-    benchmark_dictionary_method(bm, "Insert      #{big_o['Insert']}", ds) { |d, size| d.insert size }
+    benchmark_dictionary_method(bm, "Insert      #{big_o['Insert']}", ds) { |d, size| d.insert size/2 }
     benchmark_dictionary_method(bm, "Search      #{big_o['Search']}", ds) { |d, size| d.search (size/2) }
-    benchmark_dictionary_method(bm, "Delete      #{big_o['Delete']}", ds) { |d, size| d.delete size }
+    benchmark_dictionary_method(bm, "Delete      #{big_o['Delete']}", ds) { |d, size| d.delete (size/2) }
     benchmark_dictionary_method(bm, "Maximum     #{big_o['Maximum']}", ds) { |d, size| d.max }
     benchmark_dictionary_method(bm, "Minimum     #{big_o['Minimum']}", ds) { |d, size| d.min }
     benchmark_dictionary_method(bm, "Predecessor #{big_o['Predecessor']}", ds) { |d, size| d.predecessor(size/2) }
@@ -71,12 +71,12 @@ binary_search_tree_sizes = [
   10_000,
   100_000,
   1_000_000,
-  10_000_000,
+  # 10_000_000, # takes ~7mins to load all the inserts
 ]
 
 binary_search_tree_big_o = {
   "Insert"      => "O(h)",
-  "Search"      => "O(h)",
+  "Search"      => "O(n) =[",
   "Delete"      => "O(h)",
   "Maximum"     => "O(1)",
   "Minimum"     => "O(1)",
@@ -86,3 +86,19 @@ binary_search_tree_big_o = {
 
 # benchmark_dictionary(LinkedList::Dictionary, linked_list_sizes, linked_list_big_o)
 benchmark_dictionary(BinarySearchTree::Dictionary, binary_search_tree_sizes, binary_search_tree_big_o)
+
+# Benchmark.bm 30 do |bm|
+#   d = BinarySearchTree::Dictionary.new
+
+#   binary_search_tree_sizes.each do |size|
+#     count = 0
+#     bm.report format_number(size).to_s.rjust(20) do
+#       (1..size).to_a.shuffle.each do |i|
+#         # bm.report count.to_s.rjust(20) do
+#           d.insert i
+#           count += 1
+#         # end
+#       end
+#     end
+#   end
+# end
